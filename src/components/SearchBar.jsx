@@ -14,26 +14,17 @@ const SearchBar = ({ setTracks }) => {
       const track = await getTrackFromUrl(url);
       setTracks(tracks => [...tracks, track]);
     }
-    console.log(tracks);
   }
 }
 
-
-  function getVideoId(url) {
+  async function getTrackFromUrl(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
     var match = url.match(regExp);
-    return (match && match[7].length == 11) ? match[7] : false;
-  }
+    const videoId = (match && match[7].length == 11) ? match[7] : false;
 
-  async function getVideoData(videoId) {
     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`);
     const data = await response.json();
-    return data.items[0].snippet;
-  }
-
-  async function getTrackFromUrl(url) {
-    const videoId = getVideoId(url);
-    const videoData = await getVideoData(videoId);
+    const videoData = data.items[0].snippet;
 
     return {
       title: videoData.title,
@@ -43,15 +34,11 @@ const SearchBar = ({ setTracks }) => {
     };
   }
 
-  async function getPlaylistData(playlistId) {
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}`);
-    const data = await response.json();
-    return data.items;
-  }
-
   async function getTracksFromPlaylistUrl(url) {
     const playlistId = url.split('list=')[1];
-    const playlistData = await getPlaylistData(playlistId);
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}`);
+    const data = await response.json();
+    const playlistData = data.items;
 
     return playlistData.map(item => ({
       title: item.snippet.title,
@@ -66,6 +53,7 @@ const SearchBar = ({ setTracks }) => {
   return (
     <div className="search-bar">
       <input
+        id="search-bar-input"
         type="text"
         placeholder="Input YouTube playlist URL"
         onChange={(e) => setUrl(e.target.value)}
