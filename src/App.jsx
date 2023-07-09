@@ -3,7 +3,6 @@ import { useRef, useState } from 'react';
 // import components
 import DisplayTrack from './components/DisplayTrack';
 import Controls from './components/Controls';
-import ProgressBar from './components/ProgressBar';
 import TopBar from './components/TopBar';
 import SearchBar from './components/SearchBar';
 
@@ -20,14 +19,9 @@ const App = () => {
   const [currentTrack, setCurrentTrack] = useState(
     tracks[trackIndex]
   );
-  const [timeProgress, setTimeProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-
-
 
   // reference
-  const audioRef = useRef();
-  const progressBarRef = useRef();
+  const playerRef = useRef();
 
   const handleNext = () => {
     if (trackIndex >= tracks.length - 1) {
@@ -42,24 +36,19 @@ const App = () => {
   return (
     <>
       <TopBar />
-      <SearchBar setTracks={setTracks}/>
+      <SearchBar setTracks={setTracks} />
       <div className="audio-player">
         <div className="inner">
           <DisplayTrack
             {...{
               currentTrack,
-              audioRef,
-              setDuration,
-              progressBarRef,
+              playerRef,
               handleNext,
             }}
           />
-          {/* <Controls
+          <Controls
             {...{
-              audioRef,
-              progressBarRef,
-              duration,
-              setTimeProgress,
+              playerRef,
               tracks,
               trackIndex,
               setTrackIndex,
@@ -67,9 +56,6 @@ const App = () => {
               handleNext,
             }}
           />
-          <ProgressBar
-            {...{ progressBarRef, audioRef, timeProgress, duration }}
-          /> */}
         </div>
       </div>
     </>
