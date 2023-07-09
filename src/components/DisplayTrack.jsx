@@ -1,4 +1,5 @@
-import { BsMusicNoteBeamed } from 'react-icons/bs';
+import ReactPlayer from 'react-player';
+
 
 const DisplayTrack = ({
   currentTrack,
@@ -15,12 +16,7 @@ const DisplayTrack = ({
 
   return (
     <div>
-      <audio
-        src={currentTrack.src}
-        ref={audioRef}
-        onLoadedMetadata={onLoadedMetadata}
-        onEnded={handleNext}
-      />
+      <ReactPlayer url={url} controls={true} />
       <div className="audio-info">
         <div className="audio-image">
           {currentTrack.thumbnail ? (
@@ -41,4 +37,5 @@ const DisplayTrack = ({
     </div>
   );
 };
+
 export default DisplayTrack;

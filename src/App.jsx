@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-//import { tracks } from './data/tracks';
 
 // import components
 import DisplayTrack from './components/DisplayTrack';
