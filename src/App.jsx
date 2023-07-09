@@ -54,7 +54,7 @@ const App = () => {
               handleNext,
             }}
           />
-          <Controls
+          {/* <Controls
             {...{
               audioRef,
               progressBarRef,
@@ -69,7 +69,7 @@ const App = () => {
           />
           <ProgressBar
             {...{ progressBarRef, audioRef, timeProgress, duration }}
-          />
+          /> */}
         </div>
       </div>
     </>
