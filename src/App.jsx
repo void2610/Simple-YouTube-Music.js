@@ -42,8 +42,10 @@ const App = () => {
           <DisplayTrack
             {...{
               currentTrack,
-              playerRef,
-              handleNext,
+              tracks,
+              trackIndex,
+              setTrackIndex,
+              setCurrentTrack
             }}
           />
           <Controls
