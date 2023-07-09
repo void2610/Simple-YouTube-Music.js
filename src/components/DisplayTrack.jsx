@@ -8,15 +8,6 @@ const DisplayTrack = ({
   setTrackIndex,
   setCurrentTrack
 }) => {
-  const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log('clearing timeout');
-      setPlaying(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [])
 
   const playNext = () => {
     if (trackIndex === 0) {
@@ -32,7 +23,7 @@ const DisplayTrack = ({
 
   return (
     <div>
-      <ReactPlayer url={currentTrack.src} controls={true} playing={playing} onEnded={playNext}/>
+      <ReactPlayer url={currentTrack.src} controls={true} playing={true} onEnded={playNext}/>
     </div>
   );
 };
