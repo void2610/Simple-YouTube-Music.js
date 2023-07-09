@@ -15,9 +15,11 @@
 }
 
 #search-bar-input {
+  width: 80%;
   display: flex;
   justify-content: center;
-  width: 94.5%;
+  text-align: center;
+  margin:0 auto;
 }
 
 .audio-player {
