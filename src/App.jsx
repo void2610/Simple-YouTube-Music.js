@@ -5,6 +5,7 @@ import DisplayTrack from './components/DisplayTrack';
 import Controls from './components/Controls';
 import TopBar from './components/TopBar';
 import SearchBar from './components/SearchBar';
+import PlayList from './components/PlayList';
 
 const App = () => {
   const [tracks, setTracks] = useState([{
@@ -34,11 +35,20 @@ const App = () => {
   };
 
   return (
-    <>
-      <TopBar />
-      <SearchBar setTracks={setTracks} />
-      <div className="audio-player">
-        <div className="inner">
+  <>
+    <TopBar />
+    <SearchBar setTracks={setTracks} />
+    <div className="audio-player">
+      <div className="inner">
+        <PlayList
+          {...{
+            currentTrack,
+            tracks,
+            trackIndex,
+            setTrackIndex,
+            setCurrentTrack
+          }} />
+        <div>
           <DisplayTrack
             {...{
               currentTrack,
@@ -60,7 +70,10 @@ const App = () => {
           />
         </div>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
+
+
 };
 export default App;

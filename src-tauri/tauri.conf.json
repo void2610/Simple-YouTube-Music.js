@@ -38,7 +38,7 @@
         "fullscreen": false,
         "resizable": true,
         "title": "Simple YouTube Player",
-        "width": 800,
+        "width": 900,
         "height": 600
       }
     ]
