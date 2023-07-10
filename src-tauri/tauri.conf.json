@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "js-test",
+    "productName": "simple-youtube-player",
     "version": "0.0.0"
   },
   "tauri": {
@@ -37,7 +37,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "js-test",
+        "title": "Simple YouTube Player",
         "width": 800,
         "height": 600
       }
