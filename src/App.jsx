@@ -11,6 +11,8 @@ import History from "./components/History";
 const App = () => {
   const [isDisplayTrack, setIsDisplayTrack] = useState(true);
 
+  const [histories, setHistories] = useState([])
+
   const [tracks, setTracks] = useState([]);
   const [trackIndex, setTrackIndex] = useState(0);
   const [currentTrack, setCurrentTrack] = useState(tracks[trackIndex]);
@@ -39,6 +41,8 @@ const App = () => {
               setTrackIndex,
               setTracks,
               setCurrentTrack,
+              histories,
+              setHistories
             }}
           />
           <div className="audio-player">
@@ -86,6 +90,8 @@ const App = () => {
               trackIndex,
               setTrackIndex,
               setCurrentTrack,
+              histories,
+              setHistories
             }}
           />
         </>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack }) => {
+const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, histories, setHistories }) => {
   const API_KEY = 'AIzaSyDqpgMER8oSy4wDRNIcwepIpDs_2r7PY-U';
 
   const [url, setUrl] = useState('');
@@ -11,9 +11,14 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack }) => {
       if (url.includes('list=')) {
         const newTracks = await getTracksFromPlaylistUrl(url);
         setTracks(tracks => [...tracks, ...newTracks]);
+
+        const playlist = await getPlaylistFromPlaylistUrl(url);
+        setHistories(histories => [...histories, playlist]);
       } else {
         const track = await getTrackFromUrl(url);
         setTracks(tracks => [...tracks, track]);
+
+        setHistories(histories => [...histories, track]);
       }
       document.getElementById('search-bar-input').value = '';
 
@@ -59,7 +64,19 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack }) => {
     }));
   }
 
+  async function getPlaylistFromPlaylistUrl(url) {
+    const playlistId = url.split('list=')[1];
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${API_KEY}`);
+    const data = await response.json();
+    const playlistData = data.items[0];
 
+    return {
+      title: playlistData.snippet.title,
+      src: url,
+      author: playlistData.snippet.channelTitle,
+      thumbnail: playlistData.snippet.thumbnails.default.url
+    };
+  }
 
   return (
     <div className="search-bar">
