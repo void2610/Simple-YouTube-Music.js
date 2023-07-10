@@ -12,13 +12,14 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
         const newTracks = await getTracksFromPlaylistUrl(url);
         setTracks(tracks => [...tracks, ...newTracks]);
 
-        const playlist = await getPlaylistFromPlaylistUrl(url);
+        const playlist = await createHistoryFromPlaylistUrl(url);
         setHistories(histories => [...histories, playlist]);
       } else {
         const track = await getTrackFromUrl(url);
         setTracks(tracks => [...tracks, track]);
 
-        setHistories(histories => [...histories, track]);
+        const history = await createHistoryFromUrl(url);
+        setHistories(histories => [...histories, history]);
       }
       document.getElementById('search-bar-input').value = '';
 
@@ -64,7 +65,25 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
     }));
   }
 
-  async function getPlaylistFromPlaylistUrl(url) {
+  async function createHistoryFromUrl(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    const videoId = (match && match[7].length == 11) ? match[7] : false;
+
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`);
+    const data = await response.json();
+    const videoData = data.items[0].snippet;
+
+    return {
+      title: videoData.title,
+      src: url,
+      author: videoData.channelTitle,
+      thumbnail: videoData.thumbnails.default.url,
+      type: 'video'
+    };
+  }
+
+  async function createHistoryFromPlaylistUrl(url) {
     const playlistId = url.split('list=')[1];
     const response = await fetch(`https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${API_KEY}`);
     const data = await response.json();
@@ -74,7 +93,8 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
       title: playlistData.snippet.title,
       src: url,
       author: playlistData.snippet.channelTitle,
-      thumbnail: playlistData.snippet.thumbnails.default.url
+      thumbnail: playlistData.snippet.thumbnails.default.url,
+      type: 'playlist'
     };
   }
 
