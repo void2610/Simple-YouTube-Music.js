@@ -14,6 +14,7 @@ const SearchBar = ({ setTracks }) => {
       const track = await getTrackFromUrl(url);
       setTracks(tracks => [...tracks, track]);
     }
+    document.getElementById('search-bar-input').value = '';
   }
 }
 
