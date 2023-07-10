@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack}) => {
+const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack }) => {
   const API_KEY = 'AIzaSyDqpgMER8oSy4wDRNIcwepIpDs_2r7PY-U';
 
   const [url, setUrl] = useState('');
