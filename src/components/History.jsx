@@ -31,6 +31,16 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
     }));
   }
 
+  const clearTracks = () => {
+    setTracks([]);
+    setCurrentTrack(null);
+  }
+
+  const clearHistories = () => {
+    setHistories([]);
+    localStorage.removeItem('histories');
+  }
+
 
   return (<SimpleBarReact style={{ maxHeight: '420px' }}>
     <List>
@@ -48,7 +58,10 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
         </ListItem>
       ))}
     </List>
-  </SimpleBarReact>);
+    <button onClick={clearHistories}>Clear Histories</button>
+    <button onClick={clearTracks}>Clear Tracks</button>
+  </SimpleBarReact>
+  );
 
 };
 

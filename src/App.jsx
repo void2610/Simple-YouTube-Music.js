@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 // import components
 import DisplayTrack from "./components/DisplayTrack";
@@ -11,7 +11,9 @@ import History from "./components/History";
 const App = () => {
   const [isDisplayTrack, setIsDisplayTrack] = useState(true);
 
-  const [histories, setHistories] = useState([])
+  // ローカルストレージから履歴データを取得
+  const savedHistories = localStorage.getItem('histories');
+  const [histories, setHistories] = useState(savedHistories ? JSON.parse(savedHistories) : []);
 
   const [tracks, setTracks] = useState([]);
   const [trackIndex, setTrackIndex] = useState(0);
@@ -19,6 +21,11 @@ const App = () => {
 
   // reference
   const playerRef = useRef();
+
+  // 履歴データが更新されたときにローカルストレージに保存
+  useEffect(() => {
+    localStorage.setItem('histories', JSON.stringify(histories));
+  }, [histories]);
 
   const handleNext = () => {
     if (trackIndex >= tracks.length - 1) {

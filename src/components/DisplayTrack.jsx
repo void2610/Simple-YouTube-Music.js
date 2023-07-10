@@ -1,5 +1,4 @@
 import ReactPlayer from 'react-player';
-import React, { useState, useEffect } from 'react';
 
 const DisplayTrack = ({
   currentTrack,
