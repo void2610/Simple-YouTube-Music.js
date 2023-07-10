@@ -20,9 +20,13 @@ const DisplayTrack = ({
     }
   }
 
+
+
   return (
     <div>
+      {currentTrack && (
       <ReactPlayer url={currentTrack.src} controls={true} playing={true} onEnded={playNext}/>
+      )}
     </div>
   );
 };

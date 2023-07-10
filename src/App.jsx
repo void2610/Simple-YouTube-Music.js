@@ -8,12 +8,7 @@ import SearchBar from './components/SearchBar';
 import PlayList from './components/PlayList';
 
 const App = () => {
-  const [tracks, setTracks] = useState([{
-    title: "黒鉄たま (CV: 秋奈) - いただきバベル (Aiobahn Remix) [Official Music Video]",
-    src: "https://www.youtube.com/watch?v=viChXQFBbfg",
-    author: "Aiobahn",
-    thumbnail: "https://i.ytimg.com/vi/viChXQFBbfg/default.jpg",
-    }]);
+  const [tracks, setTracks] = useState([]);
 
   // states
   const [trackIndex, setTrackIndex] = useState(0);
@@ -37,7 +32,12 @@ const App = () => {
   return (
   <>
     <TopBar />
-    <SearchBar setTracks={setTracks} />
+      <SearchBar {...{
+            tracks,
+            setTrackIndex,
+            setTracks,
+            setCurrentTrack
+          }} />
     <div className="audio-player">
       <div className="inner">
         <PlayList

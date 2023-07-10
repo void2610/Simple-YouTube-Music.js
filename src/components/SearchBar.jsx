@@ -1,22 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const SearchBar = ({ setTracks }) => {
+const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack}) => {
   const API_KEY = 'AIzaSyDqpgMER8oSy4wDRNIcwepIpDs_2r7PY-U';
 
   const [url, setUrl] = useState('');
+  const [isFirst, setIsFirst] = useState(true);
 
   const handleKeyDown = async (event) => {
-  if (event.key === 'Enter') {
-    if (url.includes('list=')) {
-      const newTracks = await getTracksFromPlaylistUrl(url);
-      setTracks(tracks => [...tracks, ...newTracks]);
-    } else {
-      const track = await getTrackFromUrl(url);
-      setTracks(tracks => [...tracks, track]);
+    if (event.key === 'Enter') {
+      if (url.includes('list=')) {
+        const newTracks = await getTracksFromPlaylistUrl(url);
+        setTracks(tracks => [...tracks, ...newTracks]);
+      } else {
+        const track = await getTrackFromUrl(url);
+        setTracks(tracks => [...tracks, track]);
+      }
+      document.getElementById('search-bar-input').value = '';
+
     }
-    document.getElementById('search-bar-input').value = '';
   }
-}
+
+  useEffect(() => {
+    if (tracks.length > 0 && isFirst) {
+      setTrackIndex(0);
+      setCurrentTrack(tracks[0]);
+      setIsFirst(false);
+    }
+  }, [tracks]);
 
   async function getTrackFromUrl(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
