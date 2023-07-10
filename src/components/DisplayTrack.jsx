@@ -15,8 +15,8 @@ const DisplayTrack = ({
       setTrackIndex(lastTrackIndex);
       setCurrentTrack(tracks[lastTrackIndex]);
     } else {
-      setTrackIndex((prev) => prev - 1);
-      setCurrentTrack(tracks[trackIndex - 1]);
+      setTrackIndex((prev) => prev + 1);
+      setCurrentTrack(tracks[trackIndex + 1]);
     }
   }
 

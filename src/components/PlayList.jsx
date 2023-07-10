@@ -6,8 +6,6 @@ const PlayList = ({
   setTrackIndex,
   setCurrentTrack
 }) => {
-  const maxAuthor = 15;
-
   function setTrackByList(index) {
     setTrackIndex(index);
     setCurrentTrack(tracks[index]);
@@ -25,7 +23,7 @@ const PlayList = ({
           </ListItemAvatar>
           <ListItemText
             primary={track.title}
-            secondary={track.author.substring(0, maxAuthor)}
+            secondary={track.author}
             primaryTypographyProps={{ className: "primary" }}
             secondaryTypographyProps={{ style: { color: 'lightgreen' } }}
           />
