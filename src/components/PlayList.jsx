@@ -1,7 +1,7 @@
+import { List, ListItem, ListItemText } from '@material-ui/core';
+
 const PlayList = ({
-  currentTrack,
   tracks,
-  trackIndex,
   setTrackIndex,
   setCurrentTrack
 }) => {
@@ -14,21 +14,16 @@ const PlayList = ({
   }
 
   return (
-    <div style={{ height: '420px', overflowY: 'scroll' }}>
-      <ul>
+     <List style={{ maxHeight: '420px', overflowY: 'scroll' }}>
       {tracks.map((track, index) => (
-        <li key={index} onClick={() => setTrackByList(index)}>
-          {track.title.substring(0, maxTitleLength)}
-          {track.title.length > maxTitleLength && '...'}
-          <p key={index}>
-            {track.author.substring(0, maxAuthor)}
-            {track.author.length > maxAuthor && '...'}
-          </p>
-          <img src={track.thumbnail} alt={track.title}/>
-        </li>
+        <ListItem button key={index} onClick={() => setTrackByList(index)}>
+          <ListItemText
+            primary={track.title.substring(0, maxTitleLength)}
+            secondary={track.author.substring(0, maxAuthor)}
+          />
+        </ListItem>
       ))}
-    </ul>
-    </div>
+    </List>
   );
 }
 
