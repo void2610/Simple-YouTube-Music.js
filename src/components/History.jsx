@@ -9,7 +9,6 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
     const history = histories[index];
     if (history.type === 'video') {
       setTracks(tracks => [...tracks, history]);
-      console.log(history);
     }
     else if (history.type === 'playlist') {
       const playlist = await getTracksFromPlaylistUrl(history.src);

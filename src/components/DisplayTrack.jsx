@@ -9,10 +9,9 @@ const DisplayTrack = ({
 }) => {
 
   const playNext = () => {
-    if (trackIndex === 0) {
-      let lastTrackIndex = tracks.length - 1;
-      setTrackIndex(lastTrackIndex);
-      setCurrentTrack(tracks[lastTrackIndex]);
+    if (trackIndex === tracks.length - 1) {
+      setTrackIndex(0);
+      setCurrentTrack(tracks[0]);
     } else {
       setTrackIndex((prev) => prev + 1);
       setCurrentTrack(tracks[trackIndex + 1]);
