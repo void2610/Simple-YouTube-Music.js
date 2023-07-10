@@ -2,6 +2,7 @@ import { List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-
 
 const PlayList = ({
   tracks,
+  trackIndex,
   setTrackIndex,
   setCurrentTrack
 }) => {
@@ -15,7 +16,10 @@ const PlayList = ({
   return (
      <List style={{ maxHeight: '420px', overflowY: 'scroll' }}>
       {tracks.map((track, index) => (
-        <ListItem button key={index} onClick={() => setTrackByList(index)} className="listItem">
+        <ListItem button key={index} onClick={() => setTrackByList(index)}
+          className="listItem"
+          style={{ backgroundColor: trackIndex === index ? 'rgb(35, 35, 35)'  : 'transparent' }}
+        >
           <ListItemAvatar>
             <Avatar src={track.thumbnail} alt={track.title} />
           </ListItemAvatar>

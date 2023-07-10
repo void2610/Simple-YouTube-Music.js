@@ -44,6 +44,7 @@ const App = () => {
           {...{
             currentTrack,
             tracks,
+            trackIndex,
             setTrackIndex,
             setCurrentTrack
           }} />
