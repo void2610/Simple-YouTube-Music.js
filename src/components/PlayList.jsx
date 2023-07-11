@@ -27,27 +27,29 @@ const PlayList = ({
   }
 
   return (
-    <SimpleBarReact style={{ maxHeight: '420px' }} ref={simpleBarRef}>
-      <List>
-        {tracks.map((track, index) => (
-          <ListItem button key={index} onClick={() => setTrackByList(index)}
-            className="listItem"
-            style={{ backgroundColor: trackIndex === index ? 'rgb(35, 35, 35)' : 'transparent' }}
-            data-index={index}
-          >
-            <ListItemAvatar>
-              <Avatar src={track.thumbnail} alt={track.title} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={track.title}
-              secondary={track.author}
-              primaryTypographyProps={{ className: "primary" }}
-              secondaryTypographyProps={{ style: { color: 'lightgreen' } }}
-            />
-          </ListItem>
-        ))}
-      </List>
-    </SimpleBarReact>
+    <div style={{ width: '240px' }}>
+      <SimpleBarReact style={{ maxHeight: '420px' }} ref={simpleBarRef}>
+        <List>
+          {tracks.map((track, index) => (
+            <ListItem button key={index} onClick={() => setTrackByList(index)}
+              className="listItem"
+              style={{ backgroundColor: trackIndex === index ? 'rgb(35, 35, 35)' : 'transparent' }}
+              data-index={index}
+            >
+              <ListItemAvatar>
+                <Avatar src={track.thumbnail} alt={track.title} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={track.title}
+                secondary={track.author}
+                primaryTypographyProps={{ className: "primary" }}
+                secondaryTypographyProps={{ style: { color: 'lightgreen' } }}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </SimpleBarReact>
+    </div>
   );
 }
 
