@@ -9,10 +9,26 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
     const history = histories[index];
     if (history.type === 'video') {
       setTracks(tracks => [...tracks, history]);
+
+      for (let i = 0; i < histories.length; i++) {
+        if (histories[i].src === history.src) {
+          histories.splice(i, 1);
+          break;
+        }
+      }
+      setHistories(histories => [...histories, history]);
     }
     else if (history.type === 'playlist') {
       const playlist = await getTracksFromPlaylistUrl(history.src);
       setTracks(tracks => [...tracks, ...playlist]);
+
+      for (let i = 0; i < histories.length; i++) {
+        if (histories[i].src === history.src) {
+          histories.splice(i, 1);
+          break;
+        }
+      }
+      setHistories(histories => [...histories, playlist]);
     }
   }
 
@@ -21,7 +37,6 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
     const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}`);
     const data = await response.json();
     const playlistData = data.items;
-
     return playlistData.map(item => ({
       title: item.snippet.title,
       src: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
@@ -41,27 +56,30 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
   }
 
 
-  return (<SimpleBarReact style={{ maxHeight: '420px' }}>
-    <List>
-      {histories.map((track, index) => (
-        <ListItem button key={index} className="listItem" onClick={() => setTrackByHistories(index)}>
-          <ListItemAvatar>
-            <Avatar src={track.thumbnail} alt={track.title} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={track.title}
-            secondary={track.author}
-            primaryTypographyProps={{ className: "primary" }}
-            secondaryTypographyProps={{ style: { color: 'lightgreen' } }}
-          />
-        </ListItem>
-      ))}
-    </List>
-    <button onClick={clearHistories}>Clear Histories</button>
-    <button onClick={clearTracks}>Clear Tracks</button>
-  </SimpleBarReact>
-  );
+  return (
+    <>
+      <SimpleBarReact style={{ maxHeight: '460px' }}>
+        <List>
+          {histories.slice().reverse().map((track, index) => (
+            <ListItem button key={index} className="listItem" onClick={() => setTrackByHistories(histories.length - 1 - index)}>
+              <ListItemAvatar>
+                <Avatar src={track.thumbnail} alt={track.title} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={track.title}
+                secondary={track.author}
+                primaryTypographyProps={{ className: "primary" }}
+                secondaryTypographyProps={{ style: { color: 'lightgreen' } }}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </SimpleBarReact>
 
+      {histories.length != 0 && (<button onClick={clearHistories}>Clear Histories</button>)}
+      {tracks.length != 0 && (<button onClick={clearTracks}>Clear Tracks</button>)}
+    </>
+  );
 };
 
 export default History;

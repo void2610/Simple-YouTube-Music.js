@@ -73,16 +73,17 @@ const App = () => {
                     setCurrentTrack,
                   }}
                 />
-                <Controls
-                  {...{
-                    playerRef,
-                    tracks,
-                    trackIndex,
-                    setTrackIndex,
-                    setCurrentTrack,
-                    handleNext,
-                  }}
-                />
+                {currentTrack && (
+                  <Controls
+                    {...{
+                      playerRef,
+                      tracks,
+                      trackIndex,
+                      setTrackIndex,
+                      setCurrentTrack,
+                      handleNext,
+                    }}
+                  />)}
               </div>
             </div>
           </div>
