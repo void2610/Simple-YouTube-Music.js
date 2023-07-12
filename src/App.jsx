@@ -7,6 +7,7 @@ import TopBar from "./components/TopBar";
 import SearchBar from "./components/SearchBar";
 import PlayList from "./components/PlayList";
 import History from "./components/History";
+import Header from "./components/Header";
 
 const App = () => {
   const [isDisplayTrack, setIsDisplayTrack] = useState(true);
