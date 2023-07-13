@@ -52,20 +52,21 @@ const TopBar = ({ isDisplayTrack, setIsDisplayTrack }) => {
 
   return (
     <>
-      <ButtonGroup variant="contained" aria-label="outlined button group" size="large" style={{ width: '93.06%' }}>
-        <Button variant="outlined" startIcon={<QueueMusicIcon />} style={{
-          ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-          ...(isDisplayTrack ? activeButtonStyle : {})
-        }} onClick={trackButtonClick}>Tracks</Button>
-        <Button variant="outlined" startIcon={<HistoryIcon />} style={{
-          ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-          ...(!isDisplayTrack ? activeButtonStyle : {})
-        }} onClick={historyButtonClick}>History</Button>
-      </ButtonGroup >
-      < IconButton className={classes.iconButton} style={{ color: 'white', boxShadow: 'none', marginTop: '-15px', marginLeft: '13.3px' }} onClick={() => { setDrawerOpened(true); }}>
-        <MoreVertIcon />
-      </ IconButton>
-
+      <div style={{ display: 'flex', alignItems: 'center', marginTop: '-5px' }}>
+        <ButtonGroup variant="contained" aria-label="outlined button group" size="large" style={{ width: '93.16%' }}>
+          <Button variant="outlined" startIcon={<QueueMusicIcon />} style={{
+            ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+            ...(isDisplayTrack ? activeButtonStyle : {})
+          }} onClick={trackButtonClick}>Tracks</Button>
+          <Button variant="outlined" startIcon={<HistoryIcon />} style={{
+            ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+            ...(!isDisplayTrack ? activeButtonStyle : {})
+          }} onClick={historyButtonClick}>History</Button>
+        </ButtonGroup >
+        < IconButton className={classes.iconButton} style={{ color: 'white', boxShadow: 'none', marginLeft: '12px' }} onClick={() => { setDrawerOpened(true); }}>
+          <MoreVertIcon />
+        </ IconButton>
+      </div >
 
 
       <Drawer
