@@ -20,6 +20,7 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
     }
     else if (history.type === 'playlist') {
       const playlist = await getTracksFromPlaylistUrl(history.src);
+      console.log('aaa=' + history.src);
       setTracks(tracks => [...tracks, ...playlist]);
 
       for (let i = 0; i < histories.length; i++) {
@@ -28,7 +29,7 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
           break;
         }
       }
-      setHistories(histories => [...histories, playlist]);
+      setHistories(histories => [...histories, history]);
     }
   }
 
