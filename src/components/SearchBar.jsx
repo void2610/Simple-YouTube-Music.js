@@ -13,12 +13,24 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
         setTracks(tracks => [...tracks, ...newTracks]);
 
         const playlist = await createHistoryFromPlaylistUrl(url);
+        for (let i = 0; i < histories.length; i++) {
+          if (histories[i].src === playlist.src) {
+            histories.splice(i, 1);
+            break;
+          }
+        }
         setHistories(histories => [...histories, playlist]);
       } else {
         const track = await getTrackFromUrl(url);
         setTracks(tracks => [...tracks, track]);
 
         const history = await createHistoryFromUrl(url);
+        for (let i = 0; i < histories.length; i++) {
+          if (histories[i].src === history.src) {
+            histories.splice(i, 1);
+            break;
+          }
+        }
         setHistories(histories => [...histories, history]);
       }
       document.getElementById('search-bar-input').value = '';

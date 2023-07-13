@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, makeStyles, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, makeStyles, Button, IconButton } from '@material-ui/core'
 import React from 'react'
 import { useRef, useState, useEffect } from "react";
 import Drawer from '@mui/material/Drawer';
@@ -13,7 +13,7 @@ const drawerlStyle = {
   lineHeight: '24px',
   fontWeight: 400,
   color: '#f6f6f6',
-  backgroundColor: '#0f0f0f',
+  backgroundColor: '#2f2f2f',
   fontSynthesis: 'none',
   textRendering: 'optimizeLegibility',
   WebkitFontSmoothing: 'antialiased',
@@ -23,8 +23,23 @@ const drawerlStyle = {
   width: '170px'
 };
 
+const activeButtonStyle = {
+  backgroundColor: '#3f51b5',
+  color: 'white'
+};
 
-const TopBar = ({ setIsDisplayTrack }) => {
+const useStyles = makeStyles({
+  iconButton: {
+    '&:hover': {
+      backgroundColor: '#272727'
+    }
+  }
+});
+
+
+const TopBar = ({ isDisplayTrack, setIsDisplayTrack }) => {
+  const classes = useStyles();
+
   const [drawerOpened, setDrawerOpened] = useState(false);
 
   const trackButtonClick = () => {
@@ -38,9 +53,15 @@ const TopBar = ({ setIsDisplayTrack }) => {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <button style={{ width: '49.5%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={trackButtonClick}><QueueMusicIcon /> Tracks</button>
-        <button style={{ width: '49.5%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={historyButtonClick}><HistoryIcon />History</button>
-        < IconButton style={{ color: 'white', boxShadow: 'none' }} onClick={() => { setDrawerOpened(true); }}>
+        <Button variant="outlined" startIcon={<QueueMusicIcon />} style={{
+          ...{ color: '#c2c2c2', width: '49.5%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+          ...(isDisplayTrack ? activeButtonStyle : {})
+        }} onClick={trackButtonClick}>Tracks</Button>
+        <Button variant="outlined" startIcon={<HistoryIcon />} style={{
+          ...{ color: '#c2c2c2', width: '49.5%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+          ...(!isDisplayTrack ? activeButtonStyle : {})
+        }} onClick={historyButtonClick}>History</Button>
+        < IconButton className={classes.iconButton} style={{ color: 'white', boxShadow: 'none' }} onClick={() => { setDrawerOpened(true); }}>
           <MoreVertIcon style={{ fontSize: '2rem' }} />
         </ IconButton>
       </div >

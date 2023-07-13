@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <>
-      <TopBar {...{ setIsDisplayTrack }} />
+      <TopBar {...{ isDisplayTrack, setIsDisplayTrack }} />
       {isDisplayTrack && (
         <>
           <SearchBar

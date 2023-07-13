@@ -15,7 +15,7 @@
 }
 
 .simplebar-track.simplebar-vertical {
-  background: linear-gradient(lightgreen, green);
+  background: linear-gradient( #6c82ff,#3f51b5);
 }
 
 .simplebar-scrollbar:before {
