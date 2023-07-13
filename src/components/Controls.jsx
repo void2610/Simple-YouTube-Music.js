@@ -1,10 +1,9 @@
+import { AppBar, Toolbar, makeStyles, Button, IconButton, ButtonGroup } from '@material-ui/core'
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 // icons
-import {
-  IoPlaySkipBackSharp,
-  IoPlaySkipForwardSharp,
-} from 'react-icons/io5';
+import FastForwardRounded from '@mui/icons-material/FastForwardRounded';
+import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
 
 const Controls = ({
   playerRef,
@@ -14,6 +13,7 @@ const Controls = ({
   setCurrentTrack,
   handleNext,
 }) => {
+
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
@@ -42,13 +42,13 @@ const Controls = ({
   return (
     <div className="controls-wrapper">
       <div className="controls">
-        <button onClick={handlePrevious}>
-          <IoPlaySkipBackSharp />
-        </button>
 
-        <button onClick={handleNext}>
-          <IoPlaySkipForwardSharp />
-        </button>
+        <IconButton aria-label="previous song" onClick={handlePrevious} style={{ color: 'white', boxShadow: 'none' }}>
+          <FastRewindRounded fontSize="large" />
+        </IconButton>
+        <IconButton aria-label="next song" onClick={handleNext} style={{ color: 'white', boxShadow: 'none' }}>
+          <FastForwardRounded fontSize="large" />
+        </IconButton>
       </div>
     </div>
   );

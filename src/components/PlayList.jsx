@@ -43,7 +43,7 @@ const PlayList = ({
                 primary={track.title}
                 secondary={track.author}
                 primaryTypographyProps={{ className: "primary" }}
-                secondaryTypographyProps={{ style: { color: 'lightgreen' } }}
+                secondaryTypographyProps={{ style: { color: '#396cd8' } }}
               />
             </ListItem>
           ))}

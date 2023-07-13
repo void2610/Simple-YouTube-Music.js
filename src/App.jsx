@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { styled, useTheme } from '@mui/material/styles';
 
 // import components
 import DisplayTrack from "./components/DisplayTrack";
@@ -7,9 +8,10 @@ import TopBar from "./components/TopBar";
 import SearchBar from "./components/SearchBar";
 import PlayList from "./components/PlayList";
 import History from "./components/History";
-import Header from "./components/Header";
+import Settings from "./components/Settings";
 
 const App = () => {
+  const [drawerOpened, setDrawerOpened] = useState(false);
   const [isDisplayTrack, setIsDisplayTrack] = useState(true);
 
   // ローカルストレージから履歴データを取得
@@ -40,7 +42,7 @@ const App = () => {
 
   return (
     <>
-      <TopBar {...{ isDisplayTrack, setIsDisplayTrack }} />
+      <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened }} />
       {isDisplayTrack && (
         <>
           <SearchBar
@@ -106,6 +108,7 @@ const App = () => {
           />
         </>
       )}
+      <Settings  {...{ drawerOpened, setDrawerOpened }} />
     </>
   );
 };

@@ -34,14 +34,6 @@
   display: flex;
 }
 
-#search-bar-input {
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  margin:0 auto;
-}
-
 .audio-player {
   display: flex;
   justify-content: center;
@@ -115,10 +107,6 @@ button:active {
 input,
 button {
   outline: none;
-}
-
-#greet-input {
-  margin-right: 5px;
 }
 
 @media (prefers-color-scheme: dark) {
