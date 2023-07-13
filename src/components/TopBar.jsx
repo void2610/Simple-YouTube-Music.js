@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, makeStyles, Button, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, makeStyles, Button, IconButton, ButtonGroup } from '@material-ui/core'
 import React from 'react'
 import { useRef, useState, useEffect } from "react";
 import Drawer from '@mui/material/Drawer';
@@ -52,19 +52,21 @@ const TopBar = ({ isDisplayTrack, setIsDisplayTrack }) => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <ButtonGroup variant="contained" aria-label="outlined button group" size="large" style={{ width: '93.06%' }}>
         <Button variant="outlined" startIcon={<QueueMusicIcon />} style={{
-          ...{ color: '#c2c2c2', width: '49.5%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+          ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
           ...(isDisplayTrack ? activeButtonStyle : {})
         }} onClick={trackButtonClick}>Tracks</Button>
         <Button variant="outlined" startIcon={<HistoryIcon />} style={{
-          ...{ color: '#c2c2c2', width: '49.5%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+          ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
           ...(!isDisplayTrack ? activeButtonStyle : {})
         }} onClick={historyButtonClick}>History</Button>
-        < IconButton className={classes.iconButton} style={{ color: 'white', boxShadow: 'none' }} onClick={() => { setDrawerOpened(true); }}>
-          <MoreVertIcon style={{ fontSize: '2rem' }} />
-        </ IconButton>
-      </div >
+      </ButtonGroup >
+      < IconButton className={classes.iconButton} style={{ color: 'white', boxShadow: 'none', marginTop: '-15px', marginLeft: '13.3px' }} onClick={() => { setDrawerOpened(true); }}>
+        <MoreVertIcon />
+      </ IconButton>
+
+
 
       <Drawer
         anchor={'right'}
