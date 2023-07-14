@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import DisplayTrack from "./components/DisplayTrack";
 import Controls from "./components/Controls";
 import TopBar from "./components/TopBar";
@@ -54,8 +54,8 @@ const App = () => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened }} />
+      <ThemeProvider theme={mainTheme}>
+        <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened, theme }} />
         {isDisplayTrack && (
           <>
             <SearchBar

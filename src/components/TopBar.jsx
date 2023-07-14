@@ -1,5 +1,4 @@
 import { IconButton } from '@mui/material';
-import { useTheme } from '@mui/styles';
 import React from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -43,7 +42,7 @@ const TopBar = ({ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpen
             value={value}
             aria-label="Tabs where selection follows focus"
             selectionFollowsFocus
-            sx={{ width: '100%', height: '20px', minHeight: '40px', }}
+            sx={{ width: '100%', height: '20px', minHeight: '40px' }}
           >
             <Tab label="Track" sx={{ width: '50%', color: '#c2c2c2', minHeight: '40px' }}
               onClick={trackButtonClick}
