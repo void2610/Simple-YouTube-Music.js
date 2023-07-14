@@ -10,11 +10,12 @@ import History from "./components/History";
 import Settings from "./components/Settings";
 
 const App = () => {
+  //localStorage.removeItem('theme');
 
   // テーマの設定
   const firstTheme = createTheme({
     palette: {
-      mode: 'light',
+      mode: 'dark',
       primary: {
         main: '#535bf2',
       },
@@ -23,24 +24,34 @@ const App = () => {
 
   const [theme, setTheme] = useState(firstTheme);
 
-  const [drawerOpened, setDrawerOpened] = useState(false);
-  const [isDisplayTrack, setIsDisplayTrack] = useState(true);
-
   // ローカルストレージから履歴データを取得
   const savedHistories = localStorage.getItem('histories');
   const [histories, setHistories] = useState(savedHistories ? JSON.parse(savedHistories) : []);
 
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [isDisplayTrack, setIsDisplayTrack] = useState(true);
+  const savedTheme = localStorage.getItem('theme');
   const [tracks, setTracks] = useState([]);
   const [trackIndex, setTrackIndex] = useState(0);
   const [currentTrack, setCurrentTrack] = useState(tracks[trackIndex]);
-
-  // reference
   const playerRef = useRef();
+
+  useEffect(() => {
+
+    if (savedTheme) {
+      const newTheme = createTheme(JSON.parse(savedTheme));
+      setTheme(newTheme);
+    }
+  }, []);
 
   // 履歴データが更新されたときにローカルストレージに保存
   useEffect(() => {
     localStorage.setItem('histories', JSON.stringify(histories));
   }, [histories]);
+
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(theme));
+  }, [theme]);
 
   const handleNext = () => {
     if (trackIndex >= tracks.length - 1) {
