@@ -62,7 +62,17 @@ const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
           </div>
         </FormGroup>
 
-        {isOpenColorPicker && (<BlockPicker color={theme.palette.primary.main} onChangeComplete={handleChangeComplete} />)}
+        {isOpenColorPicker && (<BlockPicker color={theme.palette.primary.main} onChangeComplete={handleChangeComplete}
+          styles={{
+            default: {
+              input: {
+                backgroundColor: '#2f2f2f',
+                color: '#c2c2c2',
+              },
+            }
+          }}
+          colors={['#ef5350', '#ec407a', '#ab47bc', '#7e57c2', '#5c6bc0', '#42a5f5', '#29b6f6', '#26c6da', '#26a69a', '#66bb6a', '#9ccc65', '#d4e157', '#ffee58', '#ffca28', '#ffa726', '#ff7043', '#8d6e63', '#bdbdbd', '#78909c', '#535bf2']}
+        />)}
       </Drawer >
     </>
   );
