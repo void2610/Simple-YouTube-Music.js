@@ -70,7 +70,7 @@ const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, s
                 primary={track.title}
                 secondary={track.author}
                 primaryTypographyProps={{ className: "primary" }}
-                secondaryTypographyProps={{ style: { color: '#396cd8' } }}
+                secondaryTypographyProps={{ style: { color: '#535bf2' } }}
               />
             </ListItem>
           ))}

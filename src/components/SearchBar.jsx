@@ -64,8 +64,7 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
     const data = await response.json();
 
     if (!data.items || data.items.length === 0) {
-      console.error('指定されたURLに対してビデオデータが見つかりませんでした');
-      return;
+      throw new Error('No video found');
     }
 
     const videoData = data.items[0].snippet;
@@ -83,6 +82,11 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
     const playlistId = url.split('list=')[1];
     const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}`);
     const data = await response.json();
+
+    if (!data.items || data.items.length === 0) {
+      throw new Error('No video found');
+    }
+
     const playlistData = data.items;
 
     return playlistData.map(item => ({
@@ -132,6 +136,7 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', backgroundColor: '#2f2f2f', boxShadow: 'none' }} style={{ widows: '100%' }}
       >
         <TextField fullWidth id='search-bar-input' label="Search" variant="standard"
+          color='primary'
           placeholder="Input YouTube playlist URL"
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={handleKeyDown}

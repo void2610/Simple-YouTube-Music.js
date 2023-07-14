@@ -7,7 +7,7 @@ const PlayList = ({
   tracks,
   trackIndex,
   setTrackIndex,
-  setCurrentTrack
+  setCurrentTrack,
 }) => {
   const simpleBarRef = useRef();
 
@@ -42,8 +42,7 @@ const PlayList = ({
               <ListItemText
                 primary={track.title}
                 secondary={track.author}
-                primaryTypographyProps={{ className: "primary" }}
-                secondaryTypographyProps={{ style: { color: '#396cd8' } }}
+                secondaryTypographyProps={{ color: 'primary' }}
               />
             </ListItem>
           ))}

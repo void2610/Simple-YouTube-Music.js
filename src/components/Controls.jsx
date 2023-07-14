@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, makeStyles, Button, IconButton, ButtonGroup } from '@material-ui/core'
+import { AppBar, Toolbar, Button, IconButton, ButtonGroup } from '@material-ui/core'
 import { useState, useEffect, useRef, useCallback } from 'react';
 
 // icons

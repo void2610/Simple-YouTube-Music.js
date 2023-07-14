@@ -1,29 +1,26 @@
-import { AppBar, Toolbar, makeStyles, Button, IconButton, ButtonGroup } from '@material-ui/core'
+import { IconButton } from '@mui/material';
+import { createTheme, ThemeProvider, useTheme } from '@material-ui/core/styles';
 import React from 'react'
-import { useRef, useState, useEffect } from "react";
-import Drawer from '@mui/material/Drawer';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
 import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import HistoryIcon from '@mui/icons-material/History';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SettingsIcon from '@mui/icons-material/Settings';
 
-const activeButtonStyle = {
-  backgroundColor: '#3f51b5',
-  color: 'white'
-};
-
-const useStyles = makeStyles({
-  iconButton: {
-    '&:hover': {
-      backgroundColor: '#272727'
-    }
-  }
-});
+// const useStyles = makeStyles({
+//   iconButton: {
+//     '&:hover': {
+//       backgroundColor: '#272727'
+//     }
+//   }
+// });
 
 
 const TopBar = ({ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened }) => {
-  const classes = useStyles();
-
+  // const classes = useStyles();
+  const theme = useTheme();
 
 
   const trackButtonClick = () => {
@@ -33,25 +30,37 @@ const TopBar = ({ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpen
     setIsDisplayTrack(false);
   }
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
 
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center', marginTop: '-5px' }}>
-        <ButtonGroup variant="text" aria-label="outlined button group" size="large" style={{ width: '93.16%' }}>
-          <Button variant="outlined" startIcon={<QueueMusicIcon />} style={{
-            ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-            ...(isDisplayTrack ? activeButtonStyle : {})
-          }} onClick={trackButtonClick}>Tracks</Button>
-          <Button variant="outlined" startIcon={<HistoryIcon />} style={{
-            ...{ color: '#c2c2c2', width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-            ...(!isDisplayTrack ? activeButtonStyle : {})
-          }} onClick={historyButtonClick}>History</Button>
-        </ButtonGroup >
-        < IconButton className={classes.iconButton} style={{ color: 'white', boxShadow: 'none', marginLeft: '12px' }} onClick={() => { setDrawerOpened(true); }}>
-          <MoreVertIcon />
+        <Box sx={{ width: '100%' }}>
+          <Tabs
+            onChange={handleChange}
+            value={value}
+            aria-label="Tabs where selection follows focus"
+            selectionFollowsFocus
+            sx={{ width: '100%', height: '20px', minHeight: '40px', }}
+          >
+            <Tab label="Track" sx={{ width: '50%', color: '#c2c2c2', minHeight: '40px' }}
+              onClick={trackButtonClick}
+              icon={<QueueMusicIcon />} iconPosition="start" />
+            <Tab label="History" sx={{ width: '50%', color: '#c2c2c2', minHeight: '40px' }}
+              onClick={historyButtonClick}
+              icon={<HistoryIcon />} iconPosition="start" />
+          </Tabs>
+        </Box>
+
+        < IconButton /*className={classes.iconButton}*/ style={{ color: 'white', boxShadow: 'none', marginLeft: '12px' }} onClick={() => { setDrawerOpened(true); }}>
+          <SettingsIcon style={{ color: '#c2c2c2' }} />
         </ IconButton>
       </div >
-
     </>
   );
 };

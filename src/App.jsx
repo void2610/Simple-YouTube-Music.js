@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import { styled, useTheme } from '@mui/material/styles';
-
-// import components
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/styles';
 import DisplayTrack from "./components/DisplayTrack";
 import Controls from "./components/Controls";
 import TopBar from "./components/TopBar";
@@ -11,6 +10,15 @@ import History from "./components/History";
 import Settings from "./components/Settings";
 
 const App = () => {
+
+  const [theme, setTheme] = useState(createTheme({
+    palette: {
+      primary: {
+        main: '#535bf2',
+      },
+    },
+  }));
+
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [isDisplayTrack, setIsDisplayTrack] = useState(true);
 
@@ -42,73 +50,75 @@ const App = () => {
 
   return (
     <>
-      <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened }} />
-      {isDisplayTrack && (
-        <>
-          <SearchBar
-            {...{
-              tracks,
-              setTrackIndex,
-              setTracks,
-              setCurrentTrack,
-              histories,
-              setHistories
-            }}
-          />
-          <div className="audio-player">
-            <div className="inner">
-              <PlayList
-                {...{
-                  currentTrack,
-                  tracks,
-                  trackIndex,
-                  setTrackIndex,
-                  setCurrentTrack,
-                }}
-              />
-              <div>
-                <DisplayTrack
+      <ThemeProvider theme={theme}>
+        <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened }} />
+        {isDisplayTrack && (
+          <>
+            <SearchBar
+              {...{
+                tracks,
+                setTrackIndex,
+                setTracks,
+                setCurrentTrack,
+                histories,
+                setHistories
+              }}
+            />
+            <div className="audio-player">
+              <div className="inner">
+                <PlayList
                   {...{
                     currentTrack,
                     tracks,
                     trackIndex,
                     setTrackIndex,
-                    setCurrentTrack,
+                    setCurrentTrack
                   }}
                 />
-                {currentTrack && (
-                  <Controls
+                <div>
+                  <DisplayTrack
                     {...{
-                      playerRef,
+                      currentTrack,
                       tracks,
                       trackIndex,
                       setTrackIndex,
                       setCurrentTrack,
-                      handleNext,
                     }}
-                  />)}
+                  />
+                  {currentTrack && (
+                    <Controls
+                      {...{
+                        playerRef,
+                        tracks,
+                        trackIndex,
+                        setTrackIndex,
+                        setCurrentTrack,
+                        handleNext,
+                      }}
+                    />)}
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-      {!isDisplayTrack && (
-        <>
-          <History
-            {...{
-              currentTrack,
-              tracks,
-              setTracks,
-              trackIndex,
-              setTrackIndex,
-              setCurrentTrack,
-              histories,
-              setHistories
-            }}
-          />
-        </>
-      )}
-      <Settings  {...{ drawerOpened, setDrawerOpened }} />
+          </>
+        )}
+        {!isDisplayTrack && (
+          <>
+            <History
+              {...{
+                currentTrack,
+                tracks,
+                setTracks,
+                trackIndex,
+                setTrackIndex,
+                setCurrentTrack,
+                histories,
+                setHistories
+              }}
+            />
+          </>
+        )}
+        <Settings  {...{ drawerOpened, setDrawerOpened }} />
+      </ThemeProvider>
     </>
   );
 };
