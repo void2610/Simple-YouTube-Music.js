@@ -12,16 +12,16 @@ import Settings from "./components/Settings";
 const App = () => {
 
   // テーマの設定
-  const mainTheme = createTheme({
+  const firstTheme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: 'light',
       primary: {
         main: '#535bf2',
       },
     },
   })
 
-  const [theme, setTheme] = useState(mainTheme);
+  const [theme, setTheme] = useState(firstTheme);
 
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [isDisplayTrack, setIsDisplayTrack] = useState(true);
@@ -54,7 +54,7 @@ const App = () => {
 
   return (
     <>
-      <ThemeProvider theme={mainTheme}>
+      <ThemeProvider theme={theme}>
         <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened, theme }} />
         {isDisplayTrack && (
           <>
@@ -121,7 +121,7 @@ const App = () => {
             />
           </>
         )}
-        <Settings  {...{ drawerOpened, setDrawerOpened }} />
+        <Settings  {...{ drawerOpened, setDrawerOpened, theme, setTheme }} />
       </ThemeProvider>
     </>
   );
