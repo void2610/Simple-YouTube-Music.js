@@ -1,5 +1,5 @@
 import SimpleBarReact from 'simplebar-react';
-import { List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
 import 'simplebar-react/dist/simplebar.min.css';
 import { useRef, useEffect } from 'react';
 

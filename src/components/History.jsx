@@ -1,6 +1,6 @@
 import React from "react";
 import SimpleBarReact from 'simplebar-react';
-import { List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
 import 'simplebar-react/dist/simplebar.min.css';
 
 const History = ({ currentTrack, tracks, setTracks, trackIndex, setTrackIndex, setCurrentTrack, histories, setHistories }) => {

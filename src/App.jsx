@@ -11,13 +11,17 @@ import Settings from "./components/Settings";
 
 const App = () => {
 
-  const [theme, setTheme] = useState(createTheme({
+  // テーマの設定
+  const mainTheme = createTheme({
     palette: {
+      mode: 'light',
       primary: {
         main: '#535bf2',
       },
     },
-  }));
+  })
+
+  const [theme, setTheme] = useState(mainTheme);
 
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [isDisplayTrack, setIsDisplayTrack] = useState(true);

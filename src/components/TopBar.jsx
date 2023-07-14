@@ -1,5 +1,5 @@
 import { IconButton } from '@mui/material';
-import { createTheme, ThemeProvider, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@mui/styles';
 import React from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -19,9 +19,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 
 const TopBar = ({ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened }) => {
-  // const classes = useStyles();
-  const theme = useTheme();
-
 
   const trackButtonClick = () => {
     setIsDisplayTrack(true);
@@ -57,7 +54,7 @@ const TopBar = ({ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpen
           </Tabs>
         </Box>
 
-        < IconButton /*className={classes.iconButton}*/ style={{ color: 'white', boxShadow: 'none', marginLeft: '12px' }} onClick={() => { setDrawerOpened(true); }}>
+        < IconButton style={{ color: 'white', boxShadow: 'none', marginLeft: '12px' }} onClick={() => { setDrawerOpened(true); }}>
           <SettingsIcon style={{ color: '#c2c2c2' }} />
         </ IconButton>
       </div >
