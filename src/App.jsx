@@ -14,7 +14,7 @@ const App = () => {
   // テーマの設定
   const mainTheme = createTheme({
     palette: {
-      mode: 'light',
+      mode: 'dark',
       primary: {
         main: '#535bf2',
       },
