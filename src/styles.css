@@ -14,10 +14,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.simplebar-track.simplebar-vertical {
-  background: linear-gradient( #6c82ff,#3f51b5);
-}
-
 .simplebar-scrollbar:before {
   border-radius: 100;
 }

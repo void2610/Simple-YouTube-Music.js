@@ -87,7 +87,8 @@ const App = () => {
                     tracks,
                     trackIndex,
                     setTrackIndex,
-                    setCurrentTrack
+                    setCurrentTrack,
+                    theme
                   }}
                 />
                 <div>
