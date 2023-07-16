@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import { createTheme } from '@mui/material/styles';
 import { FormGroup, FormControlLabel, Switch } from '@mui/material'
 import { BlockPicker } from 'react-color';
 import IconButton from '@mui/material/IconButton';

@@ -3,19 +3,11 @@ import React from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 
 import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import HistoryIcon from '@mui/icons-material/History';
 import SettingsIcon from '@mui/icons-material/Settings';
-
-// const useStyles = makeStyles({
-//   iconButton: {
-//     '&:hover': {
-//       backgroundColor: '#272727'
-//     }
-//   }
-// });
-
 
 const TopBar = ({ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened }) => {
 
@@ -53,9 +45,11 @@ const TopBar = ({ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpen
           </Tabs>
         </Box>
 
-        < IconButton style={{ color: 'white', boxShadow: 'none', marginLeft: '12px' }} onClick={() => { setDrawerOpened(true); }}>
-          <SettingsIcon style={{ color: '#c2c2c2' }} />
-        </ IconButton>
+        <Tooltip title="Settings">
+          < IconButton style={{ color: 'white', boxShadow: 'none', marginLeft: '12px' }} onClick={() => { setDrawerOpened(true); }}>
+            <SettingsIcon style={{ color: '#c2c2c2' }} />
+          </ IconButton>
+        </Tooltip>
       </div >
     </>
   );

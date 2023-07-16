@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
 
 import Paper from '@mui/material/Paper';
+import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -152,11 +153,13 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
             }
           }}
         />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search"
-          onClick={() => { startSearch() }}
-          style={{ color: '2f2f2f', boxShadow: 'none', marginLeft: '12px' }}>
-          <SearchIcon style={{ color: '#c2c2c2' }} />
-        </IconButton>
+        <Tooltip title="Search">
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search"
+            onClick={() => { startSearch() }}
+            style={{ color: '2f2f2f', boxShadow: 'none', marginLeft: '12px' }}>
+            <SearchIcon style={{ color: '#c2c2c2' }} />
+          </IconButton>
+        </Tooltip>
       </Paper >
     </>
   )
