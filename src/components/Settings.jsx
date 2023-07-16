@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { createTheme } from '@mui/material/styles';
 import { FormGroup, FormControlLabel, Switch } from '@mui/material'
 import { BlockPicker } from 'react-color';
 import IconButton from '@mui/material/IconButton';
@@ -12,10 +13,14 @@ const drawerlStyle = {
 
 const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
   const [isOpenColorPicker, setIsOpenColorPicker] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(theme.palette.mode === 'dark');
 
-  const onChangeMode = (newMode) => {
-    const mode = newMode ? 'dark' : 'light';
-    console.log(mode);
+  useEffect(() => {
+    setIsDarkMode(theme.palette.mode === 'dark'); // テーマの変更に応じてダークモードの状態を更新
+  }, [theme.palette.mode]);
+
+  useEffect(() => {
+    const mode = isDarkMode ? 'dark' : 'light';
     setTheme((prevTheme) => ({
       ...prevTheme,
       palette: {
@@ -34,8 +39,9 @@ const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
         },
       },
     }));
-    console.log(theme.palette.mode);
-  };
+    // ダークモードの状態をローカルストレージに保存
+    localStorage.setItem('darkMode', mode);
+  }, [isDarkMode]);
 
   const handleChangeComplete = (newColor) => {
     setTheme((prevTheme) => ({
@@ -73,7 +79,8 @@ const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
         </div>
 
         <FormGroup style={{ marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-          <FormControlLabel control={<Switch defaultChecked color='primary' onChange={(event) => onChangeMode(event.target.checked)} />} label="Dark Mode" labelPlacement="start"
+          <FormControlLabel control={<Switch color='primary' checked={!isDarkMode}
+            onChange={(event) => setIsDarkMode(!event.target.checked)} />} label="Dark Mode" labelPlacement="start"
             style={{ marginLeft: '-5px' }} />
           <div style={{ marginLeft: '-5px' }}>
             Theme
