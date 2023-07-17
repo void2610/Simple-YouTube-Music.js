@@ -12,6 +12,35 @@ const drawerlStyle = {
 
 const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
   const [isOpenColorPicker, setIsOpenColorPicker] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(theme.palette.mode === 'dark');
+
+  useEffect(() => {
+    setIsDarkMode(theme.palette.mode === 'dark'); // テーマの変更に応じてダークモードの状態を更新
+  }, [theme.palette.mode]);
+
+  useEffect(() => {
+    const mode = isDarkMode ? 'dark' : 'light';
+    setTheme((prevTheme) => ({
+      ...prevTheme,
+      palette: {
+        ...prevTheme.palette,
+        mode: mode,
+        secondary: {
+          main: '#f50057',
+        },
+        background: {
+          paper: mode === 'dark' ? '#424242' : '#ffffff', // ダークモードかライトモードによって背景色を変更
+          default: mode === 'dark' ? '#121212' : '#f5f5f5', // ダークモードかライトモードによってデフォルトの背景色を変更
+        },
+        text: {
+          primary: mode === 'dark' ? '#ffffff' : '#000000', // ダークモードかライトモードによってテキストのプライマリカラーを変更
+          secondary: '#616161', // セカンダリカラーは常に同じ
+        },
+      },
+    }));
+    // ダークモードの状態をローカルストレージに保存
+    localStorage.setItem('darkMode', mode);
+  }, [isDarkMode]);
 
   const handleChangeComplete = (newColor) => {
     setTheme((prevTheme) => ({
@@ -36,9 +65,6 @@ const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
     setIsOpenColorPicker(!isOpenColorPicker);
   }
 
-
-
-
   return (
     <>
       <Drawer
@@ -52,7 +78,8 @@ const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
         </div>
 
         <FormGroup style={{ marginLeft: '20px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-          <FormControlLabel control={<Switch defaultChecked color='primary' />} label="Dark Mode" labelPlacement="start"
+          <FormControlLabel control={<Switch color='primary' checked={!isDarkMode}
+            onChange={(event) => setIsDarkMode(!event.target.checked)} />} label="Dark Mode" labelPlacement="start"
             style={{ marginLeft: '-5px' }} />
           <div style={{ marginLeft: '-5px' }}>
             Theme
