@@ -1438,6 +1438,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+tauri-react@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/tauri-react/-/tauri-react-0.1.0.tgz#f58d321ce19e58b63509911ecbd1dd8e817fa5f9"
+  integrity sha512-jC1yWVXWDFZuXs+r331c+DyyYe/W0zo7JvmNCXniJZEtXTCsX4ReYIZWFIxnfebjONDUS+1dvS7ldlgrA4EO3g==
+
 tiny-warning@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"

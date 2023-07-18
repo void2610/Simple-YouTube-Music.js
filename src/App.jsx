@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
+import { invoke } from "@tauri-apps/api/tauri";
 import DisplayTrack from "./components/DisplayTrack";
 import Controls from "./components/Controls";
 import TopBar from "./components/TopBar";
@@ -63,12 +64,30 @@ const App = () => {
     }
   };
 
+  //Rustコマンド
+  async function calc() {
+    const num1 = 2;
+    const num2 = 3;
+    try {
+      const result = await invoke('calc', { num1, num2 });
+      document.getElementById('aaa').innerHTML = result;
+    }
+    catch (error) {
+      console.log(error);
+      document.getElementById('aaa').innerHTML = 'error';
+    }
+  }
+
+
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened, theme }} />
         {isDisplayTrack && (
           <>
+            <button onClick={calc}>calc</button>
+            <h1 id='aaa'>aaa</h1>
             <SearchBar
               {...{
                 tracks,
