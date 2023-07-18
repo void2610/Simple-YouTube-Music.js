@@ -30,7 +30,7 @@ const Settings = ({ drawerOpened, setDrawerOpened, theme, setTheme }) => {
         },
         background: {
           paper: mode === 'dark' ? '#424242' : '#ffffff', // ダークモードかライトモードによって背景色を変更
-          default: mode === 'dark' ? '#121212' : '#f5f5f5', // ダークモードかライトモードによってデフォルトの背景色を変更
+          default: mode === 'dark' ? '#121212' : '#ffffff', // ダークモードかライトモードによってデフォルトの背景色を変更
         },
         text: {
           primary: mode === 'dark' ? '#ffffff' : '#000000', // ダークモードかライトモードによってテキストのプライマリカラーを変更
