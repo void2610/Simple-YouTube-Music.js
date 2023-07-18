@@ -1,7 +1,7 @@
 [package]
-name = "js-test"
-version = "0.0.0"
-description = "A Tauri App"
+name = "simple-youtube-player"
+version = "0.8.0"
+description = "Simple application to enter the url of a youtube video and play the video."
 authors = ["you"]
 license = ""
 repository = ""

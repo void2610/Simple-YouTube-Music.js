@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "simple-youtube-player",
-    "version": "0.0.0"
+    "version": "0.8.0"
   },
   "tauri": {
     "allowlist": {
