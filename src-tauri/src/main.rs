@@ -48,18 +48,63 @@ async fn get_video_info(url: &str) -> Result<Track, Box<dyn std::error::Error>> 
     Ok(track)
 }
 
-//非同期関数を同期関数から呼び出すための関数
+async fn get_playlist_info(url: &str) -> Result<Vec<Track>, Box<dyn std::error::Error>> {
+    let playlist_id = url.split("list=").nth(1).ok_or("Invalid playlist URL")?;
+    let api_key: &str = "AIzaSyDqpgMER8oSy4wDRNIcwepIpDs_2r7PY-U";
+    let client = Client::new();
+    let url = format!(
+        "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId={}&key={}",
+        playlist_id, api_key
+    );
+    let response = client.get(&url).send().await?;
+    let data: serde_json::Value = response.json().await?;
+    if data["items"]
+        .as_array()
+        .map_or(true, |items| items.is_empty())
+    {
+        return Err("No video found".into());
+    }
+    let tracks = data["items"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|item| Track {
+            title: item["snippet"]["title"].as_str().unwrap().to_string(),
+            src: format!(
+                "https://www.youtube.com/watch?v={}",
+                item["snippet"]["resourceId"]["videoId"].as_str().unwrap()
+            ),
+            author: item["snippet"]["channelTitle"]
+                .as_str()
+                .unwrap()
+                .to_string(),
+            thumbnail: item["snippet"]["thumbnails"]["default"]["url"]
+                .as_str()
+                .unwrap()
+                .to_string(),
+        })
+        .collect();
+    Ok(tracks)
+}
+
 #[tauri::command]
-async fn get_video_info_sync(url: String) -> Result<Track, String> {
-    match get_video_info(&url).await {
-        Ok(info) => Ok(info),
-        Err(e) => Err(e.to_string()),
+async fn start_search(url: String) -> Result<serde_json::Value, String> {
+    if url.contains("list=") {
+        match get_playlist_info(&url).await {
+            Ok(tracks) => Ok(serde_json::to_value(tracks).unwrap()),
+            Err(e) => Err(e.to_string()),
+        }
+    } else {
+        match get_video_info(&url).await {
+            Ok(track) => Ok(serde_json::to_value(track).unwrap()),
+            Err(e) => Err(e.to_string()),
+        }
     }
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_video_info_sync])
+        .invoke_handler(tauri::generate_handler![start_search])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -15,7 +15,7 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      startSearch();
+      start_search();
     }
   }
 
@@ -29,8 +29,6 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
 
   async function startSearch() {
     if (url.includes('list=')) {
-      const newTracks = await getTracksFromPlaylistUrl(url);
-      setTracks(tracks => [...tracks, ...newTracks]);
 
       const playlist = await createHistoryFromPlaylistUrl(url);
       for (let i = 0; i < histories.length; i++) {
@@ -41,8 +39,6 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
       }
       setHistories(histories => [...histories, playlist]);
     } else {
-      const track = await get_track(url);
-      setTracks(tracks => [...tracks, track]);
 
       const history = await createHistoryFromUrl(url);
       for (let i = 0; i < histories.length; i++) {
@@ -56,38 +52,16 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
     document.getElementById('search-bar-input').value = '';
   }
 
-  async function get_track(url) {
+  async function start_search() {
     try {
-      const track = await invoke('get_video_info_sync', { url: url });
-      return {
-        title: track.title,
-        src: url,
-        author: track.channelTitle,
-        thumbnail: track.thumbnail
-      };
+      const result = await invoke('start_search', { url: url });
+      setTracks(tracks => [...tracks, ...result]);
+      document.getElementById('search-bar-input').value = '';
     }
     catch (error) {
       throw new Error(error);
     }
-  }
 
-  async function getTracksFromPlaylistUrl(url) {
-    const playlistId = url.split('list=')[1];
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}`);
-    const data = await response.json();
-
-    if (!data.items || data.items.length === 0) {
-      throw new Error('No video found');
-    }
-
-    const playlistData = data.items;
-
-    return playlistData.map(item => ({
-      title: item.snippet.title,
-      src: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
-      author: item.snippet.channelTitle,
-      thumbnail: item.snippet.thumbnails.default.url
-    }));
   }
 
   async function createHistoryFromUrl(url) {
@@ -147,7 +121,7 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
         />
         <Tooltip title="Search">
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search"
-            onClick={() => { startSearch() }}
+            onClick={() => { start_search() }}
             style={{ color: '2f2f2f', boxShadow: 'none', marginLeft: '12px' }}>
             <SearchIcon style={{ color: '#c2c2c2' }} />
           </IconButton>

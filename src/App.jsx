@@ -67,10 +67,10 @@ const App = () => {
   //Rustコマンド
 
   async function get_track() {
-    const url = 'https://www.youtube.com/watch?v=Y3gp_9hhm9s';
+    const url = 'https://www.youtube.com/watch?v=QjGJIxcqH5g&list=PL8MYov6p9Jvmac9PpCChiTiqXvAFN8cEP&pp=iAQB';
     try {
-      const track = await invoke('get_video_info_sync', { url: url });
-      document.getElementById('aaa').innerHTML = track.title;
+      const track = await invoke('start_search', { url: url });
+      document.getElementById('aaa').innerHTML = track[1].title;
     }
     catch (error) {
       document.getElementById('aaa').innerHTML = error;
