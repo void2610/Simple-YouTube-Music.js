@@ -65,20 +65,17 @@ const App = () => {
   };
 
   //Rustコマンド
-  async function calc() {
-    const num1 = 2;
-    const num2 = 3;
+
+  async function get_track() {
+    const url = 'https://www.youtube.com/watch?v=Y3gp_9hhm9s';
     try {
-      const result = await invoke('calc', { num1, num2 });
-      document.getElementById('aaa').innerHTML = result;
+      const track = await invoke('get_video_info_sync', { url: url });
+      document.getElementById('aaa').innerHTML = track.title;
     }
     catch (error) {
-      console.log(error);
-      document.getElementById('aaa').innerHTML = 'error';
+      document.getElementById('aaa').innerHTML = error;
     }
   }
-
-
 
   return (
     <>
@@ -86,7 +83,7 @@ const App = () => {
         <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened, theme }} />
         {isDisplayTrack && (
           <>
-            <button onClick={calc}>calc</button>
+            <button onClick={get_track}>execute</button>
             <h1 id='aaa'>aaa</h1>
             <SearchBar
               {...{

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
-
+import { invoke } from "@tauri-apps/api/tauri";
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -41,7 +41,7 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
       }
       setHistories(histories => [...histories, playlist]);
     } else {
-      const track = await getTrackFromUrl(url);
+      const track = await get_track(url);
       setTracks(tracks => [...tracks, track]);
 
       const history = await createHistoryFromUrl(url);
@@ -56,28 +56,20 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
     document.getElementById('search-bar-input').value = '';
   }
 
-  async function getTrackFromUrl(url) {
-    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    const videoId = (match && match[7].length == 11) ? match[7] : false;
-
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`);
-    const data = await response.json();
-
-    if (!data.items || data.items.length === 0) {
-      throw new Error('No video found');
+  async function get_track(url) {
+    try {
+      const track = await invoke('get_video_info_sync', { url: url });
+      return {
+        title: track.title,
+        src: url,
+        author: track.channelTitle,
+        thumbnail: track.thumbnail
+      };
     }
-
-    const videoData = data.items[0].snippet;
-
-    return {
-      title: videoData.title,
-      src: url,
-      author: videoData.channelTitle,
-      thumbnail: videoData.thumbnails.default.url
-    };
+    catch (error) {
+      throw new Error(error);
+    }
   }
-
 
   async function getTracksFromPlaylistUrl(url) {
     const playlistId = url.split('list=')[1];
