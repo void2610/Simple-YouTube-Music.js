@@ -64,27 +64,12 @@ const App = () => {
     }
   };
 
-  //Rustコマンド
-
-  async function get_track() {
-    const url = 'https://www.youtube.com/watch?v=QjGJIxcqH5g&list=PL8MYov6p9Jvmac9PpCChiTiqXvAFN8cEP&pp=iAQB';
-    try {
-      const track = await invoke('start_search', { url: url });
-      document.getElementById('aaa').innerHTML = track[1].title;
-    }
-    catch (error) {
-      document.getElementById('aaa').innerHTML = error;
-    }
-  }
-
   return (
     <>
       <ThemeProvider theme={theme}>
         <TopBar {...{ isDisplayTrack, setIsDisplayTrack, drawerOpened, setDrawerOpened, theme }} />
         {isDisplayTrack && (
           <>
-            <button onClick={get_track}>execute</button>
-            <h1 id='aaa'>aaa</h1>
             <SearchBar
               {...{
                 tracks,
