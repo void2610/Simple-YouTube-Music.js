@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
-
+import { invoke } from "@tauri-apps/api/tauri";
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -15,7 +15,7 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
 
   const handleKeyDown = async (event) => {
     if (event.key === 'Enter') {
-      startSearch();
+      start_search();
     }
   }
 
@@ -29,8 +29,6 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
 
   async function startSearch() {
     if (url.includes('list=')) {
-      const newTracks = await getTracksFromPlaylistUrl(url);
-      setTracks(tracks => [...tracks, ...newTracks]);
 
       const playlist = await createHistoryFromPlaylistUrl(url);
       for (let i = 0; i < histories.length; i++) {
@@ -41,8 +39,6 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
       }
       setHistories(histories => [...histories, playlist]);
     } else {
-      const track = await getTrackFromUrl(url);
-      setTracks(tracks => [...tracks, track]);
 
       const history = await createHistoryFromUrl(url);
       for (let i = 0; i < histories.length; i++) {
@@ -56,46 +52,16 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
     document.getElementById('search-bar-input').value = '';
   }
 
-  async function getTrackFromUrl(url) {
-    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    const videoId = (match && match[7].length == 11) ? match[7] : false;
-
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`);
-    const data = await response.json();
-
-    if (!data.items || data.items.length === 0) {
-      throw new Error('No video found');
+  async function start_search() {
+    try {
+      const result = await invoke('start_search', { url: url });
+      setTracks(tracks => [...tracks, ...result]);
+      document.getElementById('search-bar-input').value = '';
+    }
+    catch (error) {
+      throw new Error(error);
     }
 
-    const videoData = data.items[0].snippet;
-
-    return {
-      title: videoData.title,
-      src: url,
-      author: videoData.channelTitle,
-      thumbnail: videoData.thumbnails.default.url
-    };
-  }
-
-
-  async function getTracksFromPlaylistUrl(url) {
-    const playlistId = url.split('list=')[1];
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}`);
-    const data = await response.json();
-
-    if (!data.items || data.items.length === 0) {
-      throw new Error('No video found');
-    }
-
-    const playlistData = data.items;
-
-    return playlistData.map(item => ({
-      title: item.snippet.title,
-      src: `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`,
-      author: item.snippet.channelTitle,
-      thumbnail: item.snippet.thumbnails.default.url
-    }));
   }
 
   async function createHistoryFromUrl(url) {
@@ -155,7 +121,7 @@ const SearchBar = ({ tracks, setTrackIndex, setTracks, setCurrentTrack, historie
         />
         <Tooltip title="Search">
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search"
-            onClick={() => { startSearch() }}
+            onClick={() => { start_search() }}
             style={{ color: '2f2f2f', boxShadow: 'none', marginLeft: '12px' }}>
             <SearchIcon style={{ color: '#c2c2c2' }} />
           </IconButton>
