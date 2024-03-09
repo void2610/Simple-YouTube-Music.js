@@ -17,3 +17,7 @@ You can control the videos with the buttons on the screen.
 
 入力欄に動画かプレイリストのyoutubeリンクを入力してエンターを押すとプレイリストに動画が追加されます。
 画面上のボタンで動画を操作できます。
+
+動作動画
+
+[![](https://img.youtube.com/vi/qNA2knqxbIE/0.jpg)](https://www.youtube.com/watch?v=qNA2knqxbIE)
